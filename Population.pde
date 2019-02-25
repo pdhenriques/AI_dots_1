@@ -1,4 +1,6 @@
 class Population {
+  //-----------------------------------------------------------------------------------------------------------------
+  // Member Variables
   Dot[] dots;
 
   float fitnessSum;
@@ -8,6 +10,8 @@ class Population {
 
   int minStep = 1000;
 
+  //-----------------------------------------------------------------------------------------------------------------
+  // Constructor
   Population(int size) {
     dots = new Dot[size];
     for (int i = 0; i< size; i++) {
@@ -144,6 +148,10 @@ class Population {
     if (dots[bestDot].reachedGoal) {
       minStep = dots[bestDot].brain.step;
       println("step:", minStep);
+    } else {
+      float distanceToGoal = dist(dots[bestDot].pos.x, dots[bestDot].pos.y, goal.x, goal.y);
+      println("dist:", distanceToGoal);
     }
+    println("fitness:", dots[bestDot].fitness);
   }
 }

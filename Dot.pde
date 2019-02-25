@@ -1,20 +1,27 @@
 class Dot {
+  //-----------------------------------------------------------------------------------------------------------------
+  // Member Variables
   PVector pos;
+  PVector prevPos; // pos at previous frame
   PVector vel;
   PVector acc;
   Brain brain;
 
   boolean dead = false;
+  boolean deadByObstacle = false;
   boolean reachedGoal = false;
   boolean isBest = false;//true if this dot is the best dot from the previous generation
 
   float fitness = 0;
 
+  //-----------------------------------------------------------------------------------------------------------------
+  // Constructor
   Dot() {
     brain = new Brain(1000);//new brain with 1000 instructions
 
     //start the dots at the bottom of the window with a no velocity or acceleration
     pos = new PVector(width/2, height- 10);
+    prevPos = pos.copy();
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
   }
@@ -46,7 +53,8 @@ class Dot {
 
     //apply the acceleration and move the dot
     vel.add(acc);
-    vel.limit(5);//not too fast
+    vel.limit(10);//not too fast
+    prevPos = pos.copy();
     pos.add(vel);
   }
 
@@ -55,13 +63,25 @@ class Dot {
   void update() {
     if (!dead && !reachedGoal) {
       move();
-      if (pos.x< 2|| pos.y<2 || pos.x>width-2 || pos.y>height -2) {//if near the edges of the window then kill it 
+      if (pos.x< 2|| pos.x>width-2) {//if near the edges of the window then kill it 
+        //pos = prevPos.copy();
+        //vel.x *= -1;
+        dead = true;
+      } else if (pos.y<2 || pos.y>height -2) {//if near the edges of the window then kill it 
+        //pos = prevPos.copy();
+        //vel.y *= -1;
         dead = true;
       } else if (dist(pos.x, pos.y, goal.x, goal.y) < 5) {//if reached goal
-
         reachedGoal = true;
-      } else if (pos.x< 600 && pos.y < 310 && pos.x > 0 && pos.y > 300) {//if hit obstacle
-        dead = true;
+      }
+
+      Line l = new Line(prevPos, pos);
+      for (int i = ObstacleManager.obs.size() - 1; i >= 0; i--) {
+        Obstacle o = ObstacleManager.obs.get(i);
+        if (o.doIntersect(l)) {
+          dead = true;
+          deadByObstacle = true;
+        }
       }
     }
   }
@@ -75,6 +95,7 @@ class Dot {
     } else {//if the dot didn't reach the goal then the fitness is based on how close it is to the goal
       float distanceToGoal = dist(pos.x, pos.y, goal.x, goal.y);
       fitness = 1.0/(distanceToGoal * distanceToGoal);
+      if (deadByObstacle) fitness *= 0.2;
     }
   }
 
