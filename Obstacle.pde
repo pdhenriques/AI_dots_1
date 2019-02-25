@@ -2,37 +2,39 @@ class Obstacle
 {
   //-----------------------------------------------------------------------------------------------------------------
   // Member Variables
-  Line line1;  
-  Line line2;  
-  Line line3;  
-  Line line4;
+  LineSegment line1;  
+  LineSegment line2;  
+  LineSegment line3;  
+  LineSegment line4;
   
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
   Obstacle(PVector p1, PVector p2, PVector p3, PVector p4)
   {
-    line1 = new Line(p1, p2);
-    line2 = new Line(p2, p4);
-    line3 = new Line(p4, p3);
-    line4 = new Line(p3, p1);
+    line1 = new LineSegment(p1, p2);
+    line2 = new LineSegment(p2, p4);
+    line3 = new LineSegment(p4, p3);
+    line4 = new LineSegment(p3, p1);
   }
   
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
   Obstacle(int x, int y, int sizeX, int sizeY)
   {
-    line1 = new Line(new PVector(x, y), new PVector(x+sizeX, y));
-    line2 = new Line(new PVector(x+sizeX, y), new PVector(x+sizeX, y+sizeY));
-    line3 = new Line(new PVector(x+sizeX, y+sizeY), new PVector(x, y+sizeY));
-    line4 = new Line(new PVector(x, y+sizeY), new PVector(x, y));
+    line1 = new LineSegment(new PVector(x, y), new PVector(x+sizeX, y));
+    line2 = new LineSegment(new PVector(x+sizeX, y), new PVector(x+sizeX, y+sizeY));
+    line3 = new LineSegment(new PVector(x+sizeX, y+sizeY), new PVector(x, y+sizeY));
+    line4 = new LineSegment(new PVector(x, y+sizeY), new PVector(x, y));
   }
   
   //-----------------------------------------------------------------------------------------------------------------
   // The main function that returns true if line segment 'l' and any of the lines of 'this' obstacle intersect. 
-  boolean doIntersect(Line l)
+  boolean doIntersect(LineSegment l)
   {
     if (line1.doIntersect(l) || line2.doIntersect(l) || line3.doIntersect(l) || line4.doIntersect(l))
       return true;
+    //if (Geometry.doLinesIntersect(line1, l) || Geometry.doLinesIntersect(line2, l) || Geometry.doLinesIntersect(line3, l) || Geometry.doLinesIntersect(line4, l))
+      //return true;
     
     return false;
   }

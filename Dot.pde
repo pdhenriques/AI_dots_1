@@ -74,7 +74,7 @@ class Dot {
         reachedGoal = true;
       }
 
-      Line l = new Line(prevPos, pos);
+      LineSegment l = new LineSegment(prevPos, pos);
       for (int i = ObstacleManager.obs.size() - 1; i >= 0; i--) {
         Obstacle o = ObstacleManager.obs.get(i);
         if (o.doIntersect(l)) {

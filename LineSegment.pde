@@ -1,4 +1,4 @@
-class Line
+public class LineSegment
 {
   //-----------------------------------------------------------------------------------------------------------------
   // Member Variables
@@ -7,7 +7,7 @@ class Line
 
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
-  Line(PVector p1, PVector p2)
+  LineSegment(PVector p1, PVector p2)
   {
     point1 = p1;
     point2 = p2;
@@ -37,7 +37,7 @@ class Line
 
   //-----------------------------------------------------------------------------------------------------------------
   // The main function that returns true if line segment 'l2' and 'this' line intersect. 
-  boolean doIntersect(Line l2) 
+  boolean doIntersect(LineSegment l2) 
   { 
     int o1 = orientation(point1, point2, l2.point1); 
     int o2 = orientation(point1, point2, l2.point2); 
@@ -51,6 +51,15 @@ class Line
     if (o4 == 0 && onSegment(l2.point1, point2, l2.point2)) return true; 
 
     return false;
+  }
+  
+  //-----------------------------------------------------------------------------------------------------------------
+  // Returns the box surrounding the line
+  PVector[] getBoundingBox() {
+    PVector[] res = new PVector[2];
+    res[0] = point1;
+    res[1] = point2;
+    return res;
   }
   
   //-----------------------------------------------------------------------------------------------------------------
