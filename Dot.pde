@@ -8,7 +8,6 @@ class Dot {
   Brain brain;
 
   boolean dead = false;
-  boolean deadByObstacle = false;
   boolean reachedGoal = false;
   boolean isBest = false;//true if this dot is the best dot from the previous generation
 
@@ -20,7 +19,7 @@ class Dot {
     brain = new Brain(1000);//new brain with 1000 instructions
 
     //start the dots at the bottom of the window with a no velocity or acceleration
-    pos = new PVector(width/2, height- 10);
+    pos = new PVector(width/2, height- 40);
     prevPos = pos.copy();
     vel = new PVector(0, 0);
     acc = new PVector(0, 0);
@@ -80,7 +79,6 @@ class Dot {
         Obstacle o = ObstacleManager.obs.get(i);
         if (o.doIntersect(l)) {
           dead = true;
-          deadByObstacle = true;
         }
       }
     }
@@ -95,7 +93,6 @@ class Dot {
     } else {//if the dot didn't reach the goal then the fitness is based on how close it is to the goal
       float distanceToGoal = dist(pos.x, pos.y, goal.x, goal.y);
       fitness = 1.0/(distanceToGoal * distanceToGoal);
-      if (deadByObstacle) fitness *= 0.2;
     }
   }
 

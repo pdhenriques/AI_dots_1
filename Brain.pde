@@ -34,8 +34,11 @@ class Brain {
   //----------------------------------------------------------------------------------------------------------------------------------------
   //mutates the brain by setting some of the directions to random vectors
   void mutate() {
-    float mutationRate = 0.1;//chance that any vector in directions gets changed
+    float mutationRate = 0.01;//chance that any vector in directions gets changed
     for (int i =0; i< directions.length; i++) {
+      //if(directions.length > 1) {
+      //  mutationRate = (i / (directions.length - 1)) / 10;
+      //}
       float rand = random(1);
       if (rand < mutationRate) {
         //set this direction as a random direction 

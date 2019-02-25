@@ -23,4 +23,13 @@ static class ObstacleManager
       return obs;
   }
   
+  //-----------------------------------------------------------------------------------------------------------------
+  // Show Obstacles
+  void showAll() {
+      for (int i = obs.size() - 1; i >= 0; i--) {
+        Obstacle o = obs.get(i);
+        o.show();
+      }
+  }
+  
 }
