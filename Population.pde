@@ -65,7 +65,6 @@ class Population {
 
 
   //-------------------------------------------------------------------------------------------------------------------------------------
-
   //gets the next generation of dots
   void naturalSelection() {
     Dot[] newDots = new Dot[dots.length];//next gen
@@ -98,7 +97,6 @@ class Population {
   }
 
   //-------------------------------------------------------------------------------------------------------------------------------------
-
   //chooses dot from the population to return randomly(considering fitness)
 
   //this function works by randomly choosing a value between 0 and the sum of all the fitnesses

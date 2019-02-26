@@ -19,7 +19,7 @@ public class LineSegment
   { 
     if (q.x <= max(p.x, r.x) && q.x >= min(p.x, r.x) && q.y <= max(p.y, r.y) && q.y >= min(p.y, r.y)) 
       return true; 
-    return false; 
+    return false;
   } 
 
   //-----------------------------------------------------------------------------------------------------------------
@@ -52,7 +52,7 @@ public class LineSegment
 
     return false;
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Returns the box surrounding the line
   PVector[] getBoundingBox() {
@@ -61,14 +61,14 @@ public class LineSegment
     res[1] = point2;
     return res;
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   //draws the line on the screen
   void show() {
     stroke(0, 150, 150);
     line(point1.x, point1.y, point2.x, point2.y);
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   //prints the line on the console
   String print() 
@@ -76,4 +76,35 @@ public class LineSegment
     return "Line from " + point1.toString() + " to " + point2.toString() + "!";
   }
 
+  PVector calculateInterceptionPoint(LineSegment l) 
+  { 
+    PVector A = point1;
+    PVector B = point2;
+    PVector C = l.point1;
+    PVector D = l.point2;
+
+    // Line AB represented as a1x + b1y = c1 
+    float a1 = B.y - A.y; 
+    float b1 = A.x - B.x; 
+    float c1 = a1*(A.x) + b1*(A.y); 
+
+    // Line CD represented as a2x + b2y = c2 
+    float a2 = D.y - C.y; 
+    float b2 = C.x - D.x; 
+    float c2 = a2*(C.x)+ b2*(C.y); 
+
+    float determinant = a1*b2 - a2*b1; 
+
+    if (determinant == 0) 
+    { 
+      // The lines are parallel. This is simplified 
+      // by returning a pair of FLT_MAX 
+      return null;
+    } else
+    { 
+      float x = (b2*c1 - b1*c2)/determinant; 
+      float y = (a1*c2 - a2*c1)/determinant; 
+      return new PVector(x, y);
+    }
+  }
 }

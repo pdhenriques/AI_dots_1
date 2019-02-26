@@ -3,7 +3,7 @@ static class ObstacleManager
   //-----------------------------------------------------------------------------------------------------------------
   // Member Variables
   static ArrayList<Obstacle> obs;
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
   ObstacleManager() {
@@ -16,20 +16,31 @@ static class ObstacleManager
   {
     obs.add(o);
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Get list of Obstacles
   static ArrayList<Obstacle> get() {
-      return obs;
+    return obs;
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Show Obstacles
   static void showAll() {
-      for (int i = obs.size() - 1; i >= 0; i--) {
-        Obstacle o = obs.get(i);
-        o.show();
-      }
+    for (int i = obs.size() - 1; i >= 0; i--) {
+      Obstacle o = obs.get(i);
+      o.show();
+    }
   }
-  
+
+  //-----------------------------------------------------------------------------------------------------------------
+  // Does Line Segment collide with any Obstacle
+  static LineSegment collided(LineSegment l) {
+    LineSegment collisionPoint = null;
+    for (int i = obs.size() - 1; i >= 0; i--) {
+      Obstacle o = obs.get(i);
+      collisionPoint = o.collides(l);
+      if (collisionPoint != null) return collisionPoint;
+    }
+    return collisionPoint;
+  }
 }

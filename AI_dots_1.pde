@@ -8,7 +8,7 @@ ObstacleManager obs = new ObstacleManager();
 void setup() {
   size(800, 800); //size of the window
   frameRate(-1);//increase this to make the dots go faster
-  setLevel(1);
+  setLevel(2);
   test = new Population(1000);//create a new population with 1000 members
 }
 
@@ -16,12 +16,12 @@ void setup() {
 void draw() { 
   background(255);
 
+  //println("####", int(54.83));
   //draw goal
   fill(255, 0, 0);
   ellipse(goal.x, goal.y, 10, 10);
 
   //draw obstacle(s)
-  //println("check in main - size:", ObstacleManager.obs.size());
   obs.showAll();
 
   if (test.allDotsDead()) {
@@ -54,12 +54,17 @@ void setLevel(int levelIndex)
     break;
   case 2: 
     println("Start Level Two");
+    ObstacleManager.add(new Obstacle(0, 290, 500, 10));
+    ObstacleManager.add(new Obstacle(300, 490, 700, 10));
+    break;
+  case 3: 
+    println("Start Level Three");
     ObstacleManager.add(new Obstacle(300, 230, 700, 10));
     ObstacleManager.add(new Obstacle(0, 380, 500, 10));
     ObstacleManager.add(new Obstacle(300, 530, 700, 10));
     break;
-  case 3: 
-    println("Start Level Three");
+  case 4: 
+    println("Start Level Four");
     ObstacleManager.add(new Obstacle(100, 300, 600, 30));
     ObstacleManager.add(new Obstacle(700, 300, 30, 300));
     ObstacleManager.add(new Obstacle(70, 300, 30, 300));

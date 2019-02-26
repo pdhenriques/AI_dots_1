@@ -6,7 +6,7 @@ class Obstacle
   LineSegment line2;  
   LineSegment line3;  
   LineSegment line4;
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
   Obstacle(PVector p1, PVector p2, PVector p3, PVector p4)
@@ -16,7 +16,7 @@ class Obstacle
     line3 = new LineSegment(p4, p3);
     line4 = new LineSegment(p3, p1);
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // Constructor
   Obstacle(int x, int y, int sizeX, int sizeY)
@@ -26,19 +26,35 @@ class Obstacle
     line3 = new LineSegment(new PVector(x+sizeX, y+sizeY), new PVector(x, y+sizeY));
     line4 = new LineSegment(new PVector(x, y+sizeY), new PVector(x, y));
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   // The main function that returns true if line segment 'l' and any of the lines of 'this' obstacle intersect. 
-  boolean doIntersect(LineSegment l)
+  LineSegment collides(LineSegment l)
   {
-    if (line1.doIntersect(l) || line2.doIntersect(l) || line3.doIntersect(l) || line4.doIntersect(l))
-      return true;
-    //if (Geometry.doLinesIntersect(line1, l) || Geometry.doLinesIntersect(line2, l) || Geometry.doLinesIntersect(line3, l) || Geometry.doLinesIntersect(line4, l))
-      //return true;
-    
-    return false;
+    PVector collisionPoint = null;
+    LineSegment exitPoint = null;
+
+    if (line1.doIntersect(l))
+    {
+      collisionPoint = line1.calculateInterceptionPoint(l);
+      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+    } else if (line2.doIntersect(l))
+    {
+      collisionPoint = line2.calculateInterceptionPoint(l);
+      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+    } else if (line3.doIntersect(l))
+    {
+      collisionPoint = line3.calculateInterceptionPoint(l);
+      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+    } else if (line4.doIntersect(l))
+    {
+      collisionPoint = line4.calculateInterceptionPoint(l);
+      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+    }
+
+    return exitPoint;
   }
-  
+
   //-----------------------------------------------------------------------------------------------------------------
   //draws the obstacle on the screen
   void show() {
@@ -56,5 +72,4 @@ class Obstacle
   {
     return "Obstacle from " + line1.point1.toString() + " to " + line2.point2.toString() + "!";
   }
-
 }

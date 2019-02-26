@@ -72,12 +72,11 @@ class Dot {
         dead = true;
       } else if (dist(pos.x, pos.y, goal.x, goal.y) < 5) {//if reached goal
         reachedGoal = true;
-      }
-
-      LineSegment l = new LineSegment(prevPos, pos);
-      for (int i = ObstacleManager.obs.size() - 1; i >= 0; i--) {
-        Obstacle o = ObstacleManager.obs.get(i);
-        if (o.doIntersect(l)) {
+      } else {
+        LineSegment l = new LineSegment(prevPos, pos);
+        LineSegment collision = ObstacleManager.collided(l);
+        if (collision != null) {
+          pos = collision.point1;
           dead = true;
         }
       }
