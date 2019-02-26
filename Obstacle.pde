@@ -32,24 +32,37 @@ class Obstacle
   LineSegment collides(LineSegment l)
   {
     PVector collisionPoint = null;
+    PVector exitAngle = null;
     LineSegment exitPoint = null;
 
     if (line1.doIntersect(l))
     {
-      collisionPoint = line1.calculateInterceptionPoint(l);
-      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+      collisionPoint = line1.calculateInterceptionPoint(l); //<>//
+      float a = line1.getVector().heading() + PI - l.getVector().heading();
+      exitAngle = line1.getVector().normalize().rotate(a);
+      exitPoint = new LineSegment(collisionPoint, exitAngle);
+      return exitPoint;
     } else if (line2.doIntersect(l))
     {
-      collisionPoint = line2.calculateInterceptionPoint(l);
-      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+      collisionPoint = line2.calculateInterceptionPoint(l); //<>//
+      float a = line2.getVector().heading() + PI - l.getVector().heading();
+      exitAngle = line2.getVector().rotate(a);
+      exitPoint = new LineSegment(collisionPoint, exitAngle);
+      return exitPoint;
     } else if (line3.doIntersect(l))
     {
-      collisionPoint = line3.calculateInterceptionPoint(l);
-      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+      collisionPoint = line3.calculateInterceptionPoint(l); //<>//
+      float a = line3.getVector().heading() + PI - l.getVector().heading();
+      exitAngle = line3.getVector().rotate(a);
+      exitPoint = new LineSegment(collisionPoint, exitAngle);
+      return exitPoint;
     } else if (line4.doIntersect(l))
     {
-      collisionPoint = line4.calculateInterceptionPoint(l);
-      exitPoint = new LineSegment(collisionPoint, new PVector(0, 0));
+      collisionPoint = line4.calculateInterceptionPoint(l); //<>//
+      float a = line4.getVector().heading() + PI - l.getVector().heading();
+      exitAngle = line4.getVector().rotate(a);
+      exitPoint = new LineSegment(collisionPoint, exitAngle);
+      return exitPoint;
     }
 
     return exitPoint;

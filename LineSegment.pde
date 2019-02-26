@@ -70,6 +70,12 @@ public class LineSegment
   }
 
   //-----------------------------------------------------------------------------------------------------------------
+  // Gets the vector as if point1 was the origin
+  PVector getVector() {
+    return new PVector(point1.x - point2.x, point1.y - point2.y);
+  }
+
+  //-----------------------------------------------------------------------------------------------------------------
   //prints the line on the console
   String print() 
   {

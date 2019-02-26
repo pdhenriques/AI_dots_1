@@ -65,19 +65,23 @@ class Dot {
       if (pos.x< 2|| pos.x>width-2) {//if near the edges of the window then kill it 
         //pos = prevPos.copy();
         //vel.x *= -1;
-        dead = true;
+        //dead = true;
       } else if (pos.y<2 || pos.y>height -2) {//if near the edges of the window then kill it 
         //pos = prevPos.copy();
         //vel.y *= -1;
-        dead = true;
+        //dead = true;
       } else if (dist(pos.x, pos.y, goal.x, goal.y) < 5) {//if reached goal
         reachedGoal = true;
       } else {
+        println(brain.step + " pos: " + pos + "  ||  vel: " + vel );
         LineSegment l = new LineSegment(prevPos, pos);
         LineSegment collision = ObstacleManager.collided(l);
         if (collision != null) {
-          pos = collision.point1;
-          dead = true;
+          //pos = collision.point1;
+          pos = prevPos.copy();
+          vel = collision.point2;
+          println("COL! pos: " + pos + "  ||  vel: " + vel );
+          //dead = true;
         }
       }
     }
